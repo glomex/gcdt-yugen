@@ -72,12 +72,6 @@ def deploy_cmd(**tooldata):
     if 'customDomain' in config:
         domain_name = config['customDomain'].get('domainName')
         route_53_record = config['customDomain'].get('route53Record')
-        #ssl_cert = {
-        #    'name': config['customDomain'].get('certificateName'),
-        #    'body': config['customDomain'].get('certificateBody'),
-        #    'private_key': config['customDomain'].get('certificatePrivateKey'),
-        #    'chain': config['customDomain'].get('certificateChain')
-        #}
         cert_name = config['customDomain'].get('certificateName')
         cert_arn = config['customDomain'].get('certificateArn')
         hosted_zone_id = config['customDomain'].get('hostedDomainZoneId')
@@ -168,12 +162,6 @@ def custom_domain_create_cmd(**tooldata):
     domain_name = config['customDomain'].get('domainName')
     route_53_record = config['customDomain'].get('route53Record')
     api_base_path = config['customDomain'].get('basePath')
-    #ssl_cert = {
-    #    'name': config['customDomain'].get('certificateName'),
-    #    'body': config['customDomain'].get('certificateBody'),
-    #    'private_key': config['customDomain'].get('certificatePrivateKey'),
-    #    'chain': config['customDomain'].get('certificateChain')
-    #}
     cert_name = config['customDomain'].get('certificateName')
     cert_arn = config['customDomain'].get('certificateArn')
     hosted_zone_id = config['customDomain'].get('hostedDomainZoneId')

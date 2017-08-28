@@ -1,0 +1,141 @@
+swagger: '2.0'
+info:
+  title: yugen config
+  description: Documentation of the config file format for `yugen` (a gcdt tool).
+  version: 0.2.0
+
+paths:
+  /test:
+    get:
+      responses:
+        "200":
+          description:  success
+
+definitions:
+  yugen:
+    description: 'The yugen config is organized into the following structure:'
+    type: object
+    properties:
+      api:
+        $ref: '#/definitions/api'
+      customDomain:
+        $ref: '#/definitions/customDomain'
+      lambda:
+        $ref: '#/definitions/lambda'
+    required:
+    - api
+    #- customDomain
+    #- lambda
+
+  api:
+    description: 'Use the `api` section to configure API Gateway details.'
+    type: object
+    properties:
+      apiKey:
+        type: string
+        example: 916Chdzdtc7idRgsPaJKABC12345EXAMPLE
+      description:
+        description: "The description for the Deployment resource to create"
+        type: string
+        example: API Gateway for my-service
+      name:
+        description: "The name of the Stage resource for the Deployment resource to create"
+        type: string
+        example: my-service-api
+      targetStage:
+        description: "The name of the Stage resource for the Deployment resource to create"
+        type: string
+        example: dev
+      cacheClusterEnabled:
+        description: "Enables a cache cluster for the Stage resource specified in the input"
+        type: boolean
+        example: true
+      cacheClusterSize:
+        description: "Specifies the cache cluster size for the Stage resource specified in the input, if a cache cluster is enabled (defaults to '0.5')"
+        type: string
+        example: '0.5'
+      methodSettings:
+        description: "A map that defines the method settings for a Stage resource"
+        type: object
+        example: '"methodSettings": {"/path/to/resource/GET": {"cachingEnabled": false}}'
+    required:
+    - apiKey
+    - description
+    - name
+    - targetStage
+    additionalProperties: false
+
+  customDomain:
+    description: 'Configuration necessary to setup a custom domain for the api.'
+    type: object
+    properties:
+      basePath:
+        type: string
+      certificateName:
+        description: "The user-friendly name of the certificate"
+        type: string
+        example: infra-glomex-cloud
+      certificateArn:
+        description: "The reference to an AWS-managed certificate. AWS Certificate Manager is the only supported source"
+        $ref: '#/definitions/arn'
+        #type: string
+      domainName:
+        description: "The name of the DomainName resource"
+        type: string
+        example: my-service-qa-eu-west-1.dev.mes.glomex.cloud
+      hostedDomainZoneId:
+        type: string
+        example: ABCDEF123456
+      route53Record:
+        type: string
+        example: my-service-qa-eu-west-1.dev.mes.glomex.cloud
+    required:
+    - basePath
+    - certificateName
+    - certificateArn
+    - domainName
+    - hostedDomainZoneId
+    - route53Record
+    additionalProperties: false
+
+  lambda:
+    type: object
+    properties:
+      entries:
+        $ref: '#/definitions/entries'
+    required:
+    - entries
+    additionalProperties: false
+
+  entriesItem:
+    type: object
+    properties:
+      alias:
+        type: string
+        example: ACTIVE
+      name:
+        type: string
+        example: my-service
+      swaggerRef:
+        type: string
+        example: my-serviceUri
+    required:
+    - alias
+    - name
+    - swaggerRef
+  entries:
+    type: array
+    items:
+      $ref: '#/definitions/entriesItem'
+    additionalProperties: false
+
+  top:
+    type: object
+    properties:
+      yugen:
+        $ref: '#/definitions/yugen'
+
+  arn:
+    type: string
+    description: '`Amazon Resource Name <http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html>`_'
+    pattern: "arn:aws:([a-zA-Z0-9-])+:([a-z]{2}-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"

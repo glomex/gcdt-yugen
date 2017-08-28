@@ -553,10 +553,6 @@ def _create_custom_domain(awsclient, domain_name, cert_name, cert_arn):
     client_api = awsclient.get_client('apigateway')
     response = client_api.create_domain_name(
         domainName=domain_name,
-        #certificateName=ssl_cert['name'],
-        #certificateBody=ssl_cert['body'],
-        #certificatePrivateKey=ssl_cert['private_key'],
-        #certificateChain=ssl_cert['chain']
         certificateName=cert_name,
         certificateArn=cert_arn
     )
