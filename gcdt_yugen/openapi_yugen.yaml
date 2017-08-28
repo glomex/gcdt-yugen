@@ -102,12 +102,12 @@ definitions:
     type: object
     properties:
       entries:
-        $ref: '#/definitions/entries'
-    required:
-    - entries
+        type: array
+        items:
+          $ref: '#/definitions/entries'
     additionalProperties: false
 
-  entriesItem:
+  entries:
     type: object
     properties:
       alias:
@@ -122,11 +122,7 @@ definitions:
     required:
     - alias
     - name
-    - swaggerRef
-  entries:
-    type: array
-    items:
-      $ref: '#/definitions/entriesItem'
+    #- swaggerRef
     additionalProperties: false
 
   top:

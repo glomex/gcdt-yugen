@@ -3,12 +3,13 @@
 from __future__ import unicode_literals, print_function
 import sys
 
+from gcdt import utils
+from gcdt.gcdt_cmd_dispatcher import cmd
+from gcdt import gcdt_lifecycle
+
 from .yugen_core import list_api_keys, get_lambdas, delete_api, \
     export_to_swagger, create_api_key, list_apis, \
     deploy_custom_domain, delete_api_key, deploy_api
-from . import utils
-from .gcdt_cmd_dispatcher import cmd
-from . import gcdt_lifecycle
 
 
 # creating docopt parameters and usage help

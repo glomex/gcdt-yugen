@@ -1,0 +1,16 @@
+{
+  "yugen": {
+    "api": {
+      "apiKey": "zivgv017jf", 
+      "cachingEnabled": true, 
+      "description": "Gcdt sample API based on dp api-mock", 
+      "methodSettings": {
+        "/cdn/usage/inGbs/byAccessToken/GET": {
+          "cachingEnabled": true
+        }
+      }, 
+      "name": "unittest-gcdt-sample-api-dev", 
+      "targetStage": "mock"
+    }
+  }
+}

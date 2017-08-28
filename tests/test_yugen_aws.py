@@ -4,13 +4,13 @@ import logging
 
 from nose.tools import assert_equal, assert_not_in
 import pytest
-
 from gcdt import utils
-from gcdt.yugen_core import deploy_api, delete_api, delete_api_key, \
-    create_api_key, _template_variables_to_dict
 from gcdt_testtools import helpers
 from gcdt_testtools.helpers_aws import check_preconditions
 from gcdt_testtools.helpers_aws import awsclient  # fixtures!
+
+from gcdt_yugen.yugen_core import deploy_api, delete_api, delete_api_key, \
+    create_api_key, _template_variables_to_dict
 
 log = logging.getLogger(__name__)
 

@@ -6,7 +6,6 @@ from gcdt.utils import dict_merge
 from gcdt import gcdt_signals
 from gcdt.gcdt_openapi import get_openapi_defaults, validate_tool_config
 
-from .kumo_util import fix_deprecated_kumo_config
 from . import read_openapi
 
 
@@ -34,22 +33,13 @@ def incept_defaults(params):
         dict_merge(config, config_from_reader)
 
 
-def fix_and_validate_config(params):
+def validate_config(params):
     """validate the config after lookups.
     :param params: context, config (context - the _awsclient, etc..
                    config - The stack details, etc..)
     """
     context, config = params
-    validation_switched_on = config.get('defaults', {}).get('validate', True)
-    config_file_req_for_cmd = not(context['command'] not in config.get(
-        'defaults', {}).get('non_config_commands', []))
-    # fix
-    if 'yugen' in config and config_file_req_for_cmd:
-        # deprecated: mograte old-style "cloudformation" entries
-        fix_deprecated_kumo_config(config)
-
-    # validate
-    if validation_switched_on and 'yugen' in config and config_file_req_for_cmd:
+    if config.get('defaults', {}).get('validate', True) and 'yugen' in config:
         error = validate_tool_config(read_openapi(), config)
         if error:
             context['error'] = error
@@ -60,9 +50,9 @@ def register():
     E.g. run the sample stuff after at the very beginning of the lifecycle
     """
     gcdt_signals.config_read_finalized.connect(incept_defaults)
-    gcdt_signals.config_validation_init.connect(fix_and_validate_config)
+    gcdt_signals.config_validation_init.connect(validate_config)
 
 
 def deregister():
     gcdt_signals.config_read_finalized.disconnect(incept_defaults)
-    gcdt_signals.config_validation_init.disconnect(fix_and_validate_config)
+    gcdt_signals.config_validation_init.disconnect(validate_config)

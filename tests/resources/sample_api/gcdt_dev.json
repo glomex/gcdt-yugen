@@ -1,0 +1,10 @@
+{
+  "yugen": {
+    "api": {
+      "apiKey": "zivgv017jf", 
+      "description": "Gcdt sample API based on dp api-mock", 
+      "name": "unittest-gcdt-sample-api-dev", 
+      "targetStage": "mock"
+    }
+  }
+}

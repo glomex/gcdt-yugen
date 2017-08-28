@@ -7,7 +7,6 @@ import uuid
 
 from botocore.exceptions import ClientError
 from pybars import Compiler
-from tabulate import tabulate
 
 from gcdt.utils import GracefulExit, json2table
 

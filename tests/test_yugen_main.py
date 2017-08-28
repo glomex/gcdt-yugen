@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function
 
-from gcdt.yugen_main import version_cmd
+from gcdt_yugen.yugen_main import version_cmd
 from gcdt_testtools.helpers import logcapture  # fixtures!
 
 

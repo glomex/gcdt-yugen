@@ -3,12 +3,11 @@ from __future__ import unicode_literals, print_function
 import os
 import textwrap
 
-from nose.tools import assert_equal
+from gcdt_testtools.helpers import create_tempfile, cleanup_tempfiles
 
-from gcdt.yugen_core import _compile_template, _arn_to_uri, \
+from gcdt_yugen.yugen_core import _compile_template, _arn_to_uri, \
     _get_region_and_account_from_lambda_arn, \
     _convert_method_settings_into_operations
-from gcdt_testtools.helpers import create_tempfile, cleanup_tempfiles
 
 
 def _setup():
@@ -51,23 +50,21 @@ def test_compile_template(cleanup_tempfiles):
           host: "apiHostname"
     """)
 
-    assert_equal(_compile_template(swagger_template_file, template_params),
-                 expected)
+    assert _compile_template(swagger_template_file, template_params) == expected
 
 
 def test_get_region_and_account_from_lambda_arn():
     lambda_arn = 'arn:aws:lambda:eu-west-1:644239850139:function:dp-dev-process-keyword-extraction'
     lambda_region, lambda_account_id = \
         _get_region_and_account_from_lambda_arn(lambda_arn)
-    assert_equal(lambda_region, 'eu-west-1')
-    assert_equal(lambda_account_id, '644239850139')
+    assert lambda_region == 'eu-west-1'
+    assert lambda_account_id == '644239850139'
 
 
 def test_arn_to_uri():
     lambda_arn = 'arn:aws:lambda:eu-west-1:644239850139:function:dp-dev-process-keyword-extraction'
     uri = _arn_to_uri(lambda_arn, 'ACTIVE')
-    assert_equal(uri,
-                 'arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:644239850139:function:dp-dev-process-keyword-extraction:ACTIVE/invocations')
+    assert uri == 'arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:644239850139:function:dp-dev-process-keyword-extraction:ACTIVE/invocations'
 
 
 def test_convert_method_settings_into_operations():
