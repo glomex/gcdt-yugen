@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: yugen config
-  description: Documentation of the config file format for `yugen` (a gcdt tool).
+  description: "Documentation of the config file format for `yugen` (a gcdt tool). Note: if you want to add to the documentation please edit the openapi_yugen.yaml file!"
   version: 0.2.0
 
 paths:
