@@ -90,7 +90,8 @@ def deploy_api(awsclient, api_name, api_description, stage_name, api_key,
         api = _api_by_name(awsclient, api_name)
         if api is not None:
             _ensure_lambdas_permissions(awsclient, lambdas, api)
-            _create_deployment(awsclient, api_name, stage_name, cache_cluster_enabled, cache_cluster_size)
+            _create_deployment(awsclient, api_name, stage_name,
+                               cache_cluster_enabled, cache_cluster_size)
             _update_stage(awsclient, api['id'], stage_name, method_settings)
             _wire_api_key(awsclient, api_name, api_key, stage_name)
         else:
@@ -368,7 +369,9 @@ def _update_api():
 
 
 def _create_deployment(awsclient, api_name, stage_name,
-                       cache_cluster_enabled=False, cache_cluster_size='0.5'):
+                       cache_cluster_enabled=False, cache_cluster_size=None):
+    if cache_cluster_enabled and cache_cluster_size is None:
+        cache_cluster_size = '0.5'
     client_api = awsclient.get_client('apigateway')
     print('create deployment')
 

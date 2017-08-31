@@ -57,7 +57,7 @@ def deploy_cmd(**tooldata):
     api_key = config['api'].get('apiKey')
     lambdas = get_lambdas(awsclient, config, add_arn=True)
     cache_cluster_enabled = config['api'].get('cacheClusterEnabled', False)
-    cache_cluster_size = config['api'].get('cacheClusterSize', False)
+    cache_cluster_size = config['api'].get('cacheClusterSize', None)
     method_settings = config['api'].get('methodSettings', {})
     exit_code = deploy_api(
         awsclient=awsclient,
