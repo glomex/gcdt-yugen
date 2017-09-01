@@ -2,10 +2,9 @@
 from __future__ import unicode_literals, print_function
 import logging
 
-from nose.tools import assert_equal, assert_not_in
 import pytest
 from gcdt import utils
-from gcdt_testtools import helpers
+#from gcdt_testtools import helpers
 from gcdt_testtools.helpers_aws import check_preconditions
 from gcdt_testtools.helpers_aws import awsclient  # fixtures!
 
@@ -71,10 +70,10 @@ def test_template_variables_to_dict_custom_hostname(awsclient):
     result = _template_variables_to_dict(
         client_api, api_name, api_description, api_target_stage,
         custom_hostname='chn', custom_base_path='cbp')
-    assert_equal(result['apiName'], api_name)
-    assert_equal(result['apiDescription'], api_description)
-    assert_equal(result['apiBasePath'], 'cbp')
-    assert_equal(result['apiHostname'], 'chn')
+    assert result['apiName'] == api_name
+    assert result['apiDescription'] == api_description
+    assert result['apiBasePath'] == 'cbp'
+    assert result['apiHostname'] == 'chn'
 
 
 @pytest.mark.aws
@@ -86,10 +85,10 @@ def test_template_variables_to_dict(awsclient):
     client_api = awsclient.get_client('apigateway')
     result = _template_variables_to_dict(client_api, api_name,
                                          api_description, api_target_stage)
-    assert_equal(result['apiName'], api_name)
-    assert_equal(result['apiDescription'], api_description)
-    assert_equal(result['apiBasePath'], 'mock')
-    assert_not_in('apiHostname', result)
+    assert result['apiName'] == api_name
+    assert result['apiDescription'] == api_description
+    assert result['apiBasePath'] == 'mock'
+    assert 'apiHostname' not in result
 
 
 # FIXME: tests
